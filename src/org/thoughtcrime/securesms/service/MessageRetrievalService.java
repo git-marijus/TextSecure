@@ -140,7 +140,7 @@ public class MessageRetrievalService extends Service implements Runnable, Inject
   private synchronized boolean isConnectionNecessary() {
     Log.w(TAG, "Network requirement: " + networkRequirement.isPresent());
     return TextSecurePreferences.isWebsocketRegistered(this) &&
-           (activeActivities > 0 || pushPending)             &&
+           (!TextSecurePreferences.isGcmRegistered(this) || activeActivities > 0 || pushPending) &&
            networkRequirement.isPresent();
   }
 
