@@ -142,7 +142,7 @@ public class MessageRetrievalService extends Service implements Runnable, Inject
                              networkRequirement.isPresent(), activeActivities, pushPending));
 
     return TextSecurePreferences.isWebsocketRegistered(this) &&
-           (activeActivities > 0 || pushPending)             &&
+           (!TextSecurePreferences.isGcmRegistered(this) || activeActivities > 0 || pushPending) &&
            networkRequirement.isPresent();
   }
 
