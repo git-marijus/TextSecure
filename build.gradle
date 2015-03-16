@@ -102,7 +102,10 @@ dependencyVerification {
             'org.whispersystems:textsecure-android:a5e81ff87a4f531ea4997b9a18437fa5d2679e846a4b9b0b1d85371d77189e44',
 =======
             'org.whispersystems:libpastelog:3ccf00fe1597eb8ca1e5de99b17fc225387a1b80b5bbc00ec1bc4d4f3ea9cdde',
+<<<<<<< HEAD
 >>>>>>> Implement Basic WebSocket support
+=======
+>>>>>>> 3cc13e84c4377cd848c4b1080b4c36b937ae799d
             'com.android.support:support-annotations:fdee2354787ef66b268e75958de3f7f6c4f8f325510a6dac9f49c929f83a63de',
             'com.nineoldandroids:library:68025a14e3e7673d6ad2f95e4b46d78d7d068343aa99256b686fe59de1b3163a',
             'javax.inject:javax.inject:91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff',
