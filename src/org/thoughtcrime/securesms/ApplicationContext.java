@@ -55,7 +55,6 @@ public class ApplicationContext extends Application implements DependencyInjecto
   private ObjectGraph objectGraph;
   private WakefulBroadcastReceiver wakefulBroadcastReceiver;
 
-
   public static ApplicationContext getInstance(Context context) {
     return (ApplicationContext)context.getApplicationContext();
   }
