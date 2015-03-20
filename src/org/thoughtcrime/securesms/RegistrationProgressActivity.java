@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.WakefulBroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Color;
@@ -29,7 +30,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import org.thoughtcrime.securesms.crypto.MasterSecret;
 import org.thoughtcrime.securesms.push.TextSecureCommunicationFactory;
@@ -88,8 +88,14 @@ public class RegistrationProgressActivity extends BaseActionBarActivity {
 
   private EditText    codeEditText;
 
+  private WakefulBroadcastReceiver wakefulBroadcastReceiver;
+
   private MasterSecret masterSecret;
   private volatile boolean visible;
+
+  public WakefulBroadcastReceiver getWakefulBroadcastReceiver() {
+    return wakefulBroadcastReceiver;
+  }
 
   @Override
   public void onCreate(Bundle bundle) {
@@ -332,7 +338,9 @@ public class RegistrationProgressActivity extends BaseActionBarActivity {
 
     shutdownService();
     startActivity(new Intent(this, RoutingActivity.class));
-    MessageRetrievalService.registerPushReceived(this);
+    Intent intent = new Intent(this, MessageRetrievalService.class);
+    intent.setAction(MessageRetrievalService.ACTION_PUSH_RECEIVED);
+    wakefulBroadcastReceiver.startWakefulService(this, intent);
     finish();
   }
 

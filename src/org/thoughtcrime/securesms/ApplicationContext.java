@@ -18,6 +18,8 @@ package org.thoughtcrime.securesms;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.WakefulBroadcastReceiver;
 
 import org.thoughtcrime.securesms.crypto.PRNGFixes;
 import org.thoughtcrime.securesms.dependencies.AxolotlStorageModule;
@@ -51,6 +53,8 @@ public class ApplicationContext extends Application implements DependencyInjecto
 
   private JobManager jobManager;
   private ObjectGraph objectGraph;
+  private WakefulBroadcastReceiver wakefulBroadcastReceiver;
+
 
   public static ApplicationContext getInstance(Context context) {
     return (ApplicationContext)context.getApplicationContext();
@@ -70,6 +74,10 @@ public class ApplicationContext extends Application implements DependencyInjecto
     if (object instanceof InjectableType) {
       objectGraph.inject(object);
     }
+  }
+
+  public WakefulBroadcastReceiver getWakefulBroadcastReceiver() {
+    return wakefulBroadcastReceiver;
   }
 
   public JobManager getJobManager() {
@@ -108,7 +116,9 @@ public class ApplicationContext extends Application implements DependencyInjecto
       this.jobManager.add(new GcmRefreshJob(this));
     }else if (!TextSecurePreferences.isGcmRegistered(this) &&
             TextSecurePreferences.isPushRegistered(this)){
-      MessageRetrievalService.registerPushReceived(this);
+        Intent intent = new Intent(this, MessageRetrievalService.class);
+        intent.setAction(MessageRetrievalService.ACTION_PUSH_RECEIVED);
+        wakefulBroadcastReceiver.startWakefulService(this, intent);
     }
   }
 
